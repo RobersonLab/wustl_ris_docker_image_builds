@@ -17,4 +17,4 @@ python3 -m pip install snakemake==6.15.5
 bsub -q general -G <COMPUTE_ALLOCATION> -a 'docker(thatdnaguy/ubuntu:latest)' CMD
 ```
 
-The images themselves can be found on my [DockerHub](https://hub.docker.com/u/thatdnaguy) account. The Ubuntu image is based on release 18 and includes Python v3.6, Snakemake v6.15.5, and pigz.
+The images themselves can be found on my [DockerHub](https://hub.docker.com/u/thatdnaguy) account. The Ubuntu image is based on release 20 and includes Python v3.6 and Snakemake v6.15.5.

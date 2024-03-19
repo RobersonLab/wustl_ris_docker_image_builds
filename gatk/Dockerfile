@@ -1,3 +1,8 @@
+# Author: Elisha Roberson
+# Edited: 2024-03-18
+#
+# Software:
+# GATK
 FROM thatdnaguy/ubuntu_general:latest
 
 RUN apt update && \
