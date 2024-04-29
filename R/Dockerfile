@@ -1,3 +1,8 @@
+# Author: Elisha Roberson
+# Edited: 2024-03-19
+#
+# Software:
+# R
 FROM thatdnaguy/ubuntu_general:latest
 
 # Adapted from Rocker code for our ubuntu image
@@ -5,7 +10,7 @@ FROM thatdnaguy/ubuntu_general:latest
 # And cloud R project 
 # https://cran.r-project.org/bin/linux/ubuntu/fullREADME.html
 
-ENV R_BASE_VERSION 4.1.2
+ENV R_BASE_VERSION 4.3.3
 ENV TZ=America/Chicago
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
@@ -13,6 +18,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
+    software-properties-common \
+    dirmngr \
+    libicu66 \
+    libreadline8 \
     default-jre \
     default-jdk \
     libfftw3-3 \
@@ -27,12 +36,21 @@ RUN apt-get update \
     locales \
     locales-all \
     gfortran \
- && echo 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran40/' >> /etc/apt/sources.list \
+    fontconfig \
+    libfontconfig1-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    cmake \
+ && echo 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40//' >> /etc/apt/sources.list \
  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
  && apt-get update \
  && apt-get install -y --no-install-recommends \
-    r-base-core \
-    r-base-html \
-    r-doc-html \
+    r-base-core=${R_BASE_VERSION}-* \
+    r-base-html=${R_BASE_VERSION}-* \
+    r-doc-html=${R_BASE_VERSION}-* \
  && ln -s /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3 /usr/lib/blas.so \
  && ln -s /usr/lib/x86_64-linux-gnu/openblas/liblapack.so.3 /usr/lib/lapack.so 
