@@ -10,7 +10,7 @@ FROM thatdnaguy/ubuntu_general:latest
 # And cloud R project 
 # https://cran.r-project.org/bin/linux/ubuntu/fullREADME.html
 
-ENV R_BASE_VERSION 4.3.3
+ENV R_BASE_VERSION 4.4.0
 ENV TZ=America/Chicago
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
