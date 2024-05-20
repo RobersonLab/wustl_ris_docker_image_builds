@@ -39,4 +39,5 @@ RUN rm -fr /zstd-1.5.5 && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     apt update && \
     apt -y install python3.6 python3-pip && \
-    pip3 install snakemake==6.15.5
+    pip3 install snakemake==6.15.5 && \
+    pip3 install pulp==2.7.0
