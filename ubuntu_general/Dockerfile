@@ -14,7 +14,6 @@
 FROM ubuntu:20.04
 
 # update and install software used on all images
-ENV R_BASE_VERSION 4.1.2
 ENV TZ=America/Chicago
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
