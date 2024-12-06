@@ -1,6 +1,6 @@
 ##################################
 # Author: Elisha Roberson        #
-# Edited: 2024-07-18             #
+# Edited: 2024-10-24             #
 ##################################
 
 # Dockerfile for running bulk RNA-Seq analysis

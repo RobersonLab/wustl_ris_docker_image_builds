@@ -31,7 +31,8 @@ BiocManager::install(
             'WGCNA',
             'dynamicTreeCut',
             'gprofiler2',
-            'pheatmap'),
+            'pheatmap',
+			'GenomicRanges' ),
   ask = FALSE,
   checkBuilt = TRUE )
 
