@@ -1,0 +1,77 @@
+###########################
+# Author: Elisha Roberson #
+# Edited: 2024-12-09      #
+###########################
+# software: freebayes
+
+FROM thatdnaguy/ubuntu_general:latest
+
+# install packages
+RUN apt -y update && \
+    apt -y install meson \
+                ninja-build \
+                git \
+                bc \
+                libncurses5-dev \
+                libncursesw5-dev \
+                zlib1g-dev \
+                libbz2-dev \
+                liblzma-dev \
+                parallel \
+                libvcflib-tools \
+                libvcflib-dev \
+                vcftools
+
+# install cmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.31.2/cmake-3.31.2-linux-x86_64.sh && \
+    chmod +x cmake-3.31.2-linux-x86_64.sh && \
+    sh cmake-3.31.2-linux-x86_64.sh --prefix=/usr/local/ --exclude-subdir
+
+# download sources
+# manually pulling vcflib because the recurse submodules isn't getting it
+RUN git clone --recurse-submodules https://github.com/eroberson/freebayes.git && \
+    git clone --recurse-submodules https://github.com/vcflib/vcflib.git && \
+    wget https://github.com/samtools/samtools/releases/download/1.19.2/samtools-1.19.2.tar.bz2 && \
+    wget https://github.com/smarco/WFA2-lib/archive/refs/tags/v2.3.5.tar.gz && \
+    tar -xvjf samtools-1.19.2.tar.bz2 && \
+    tar -xvzf v2.3.5.tar.gz
+
+# build samtools
+WORKDIR samtools-1.19.2
+
+RUN ./configure --prefix=/usr/local && \
+    make && \
+    make install
+
+# build WFA2
+WORKDIR /WFA2-lib-2.3.5
+
+RUN mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release && \
+    cmake --build . --verbose && \
+    cmake --install . && \
+    cp ../wavefront/*.h /usr/include && \
+    cp libwfa2cpp.so /usr/lib && \
+    cp libwfa2cpp.so /usr/lib/libwfa2cpp.so.0 && \
+    cp libwfa2.so /usr/lib && \
+    cp libwfa2.so /usr/lib/libwfa2.so.0
+
+# build freebayes
+WORKDIR /freebayes/
+
+RUN rm -fr /vcflib/.git && \
+    mv /vcflib contrib && \
+	meson build -Dstatic=true -Dprefer_system_deps=false --buildtype release && \
+    chmod +x build/freebayes && \
+    cp build/freebayes /usr/local
+
+# clean up
+WORKDIR /
+
+RUN rm samtools-1.19.2.tar.bz2 && \
+    rm v2.3.5.tar.gz && \
+    rm cmake-3.31.2-linux-x86_64.sh && \
+    rm -fr samtools-1.19.2 && \
+    rm -fr WFA2-lib-2.3.5 && \
+    rm -fr freebayes
