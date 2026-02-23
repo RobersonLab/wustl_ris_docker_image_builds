@@ -32,10 +32,12 @@ BiocManager::install(
             'dynamicTreeCut',
             'gprofiler2',
             'pheatmap',
-			'GenomicRanges' ),
+            'GenomicRanges' ),
   ask = FALSE,
   checkBuilt = TRUE )
 
 # finally devtools
-devtools::install_github( 'pachterlab/sleuth' )
-devtools::install_github( 'COMBINE-lab/wasabi' )
+#devtools::install_github( 'pachterlab/sleuth' )
+BiocManager::install( 'pachterlab/sleuth' )
+#devtools::install_github( 'COMBINE-lab/wasabi' )
+BiocManager::install( 'COMBINE-lab/wasabi' )
