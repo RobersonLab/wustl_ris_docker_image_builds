@@ -1,0 +1,26 @@
+# start with CRAN packages
+install.packages(
+  pkgs = c(
+    'BiocManager', 
+    'broom', 
+    'cowplot', 
+    'clustree', 
+    'devtools', 
+    'ggforce', 
+    'gghighlight', 
+    'ggrepel', 
+    'glmGamPoi', 
+    'here', 
+    'knitr', 
+    'mclust', 
+    'openxlsx2', 
+    'patchwork', 
+    'reshape2', 
+    'Rtsne', 
+    'tsne', 
+    'umap',
+    'logistf',
+    'randomForest' ),
+  ask = FALSE,
+  checkBuilt = TRUE,
+  repos = 'https://repo.miserver.it.umich.edu/cran/' )
